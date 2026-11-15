@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>AetherFiber — Next-Generation Fiber Optic Internet</title>
+<meta name="description" content="Pure fiber optic internet for homes, businesses and data centers: stable, symmetrical and ready to grow." />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+<style>
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--orange-500:#f97316;--orange-400:#fb923c;--orange-300:#fdba74;--amber-400:#fbbf24;--amber-200:#fde68a;--ink-950:#0d0d0e;--ink-100:#f4f4f5;--ink-300:#d4d4d8;--ink-400:#a1a1aa;
+--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;--space-8:32px;--space-12:48px;--space-20:80px;
+--radius-md:12px;--radius-lg:20px;--radius-pill:9999px;
+--text-sm:.875rem;--text-md:1rem;--text-lg:1.125rem;--text-h2:clamp(1.75rem,3.2vw,2.5rem);--text-h1:clamp(2rem,5vw,3.5rem);
+--bg:var(--ink-950);--ink:var(--ink-100);--ink-body:var(--ink-300);--ink-muted:var(--ink-400);--accent:var(--orange-400);
+--line:rgba(255,255,255,.09);--surface:rgba(255,255,255,.04);--surface-hover:rgba(255,255,255,.07);
+--gradient-brand:linear-gradient(90deg,var(--orange-500),var(--amber-400));--ring:0 0 0 3px rgba(251,146,60,.6);
+--glass-scale:1.7;--font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+body{background:var(--bg);color:var(--ink-body);font-family:var(--font);font-size:var(--text-md);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:none;box-shadow:var(--ring);border-radius:var(--radius-pill)}
+.skip{position:absolute;left:var(--space-4);top:-60px;z-index:100;padding:var(--space-2) var(--space-4);background:var(--ink);color:var(--bg);border-radius:var(--radius-pill);font-weight:600}.skip:focus{top:var(--space-4)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(16px,5vw,40px)}
+.grad{background:var(--gradient-brand);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* header & uniform glass pills */
+.nav{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:0;right:0;z-index:50;pointer-events:none;padding:0 clamp(12px,3vw,24px)}
+.nav .wrap{max-width:1200px;padding:0;display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}
+.nav .logo{pointer-events:auto;height:48px;padding:0 20px;border-radius:9999px;background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.12);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(251,146,60,.18),0 12px 32px -14px rgba(0,0,0,.7),0 0 36px -18px rgba(249,115,22,.5);display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:1.25rem;letter-spacing:-.02em;color:var(--ink)}
+.nav .logo span{background:var(--gradient-brand);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mark{width:22px;height:22px;flex:none}
+
+.nav nav{display:flex;align-items:center;gap:var(--space-3)}
+.nav-pill{
+  pointer-events:auto;height:48px;padding:0 22px;border-radius:9999px;
+  background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.12);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(251,146,60,.18),0 12px 32px -14px rgba(0,0,0,.7),0 0 36px -18px rgba(249,115,22,.5);
+  display:inline-flex;align-items:center;gap:8px;font-size:var(--text-sm);font-weight:600;color:var(--ink-body);
+  transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;
+}
+.nav-pill:hover{transform:translateY(-1px);border-color:rgba(251,146,60,.45);background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.06));color:var(--ink)}
+.nav-pill.btn-pill{color:var(--ink);background:linear-gradient(180deg,rgba(251,146,60,.24),rgba(255,255,255,.05));border-color:rgba(251,146,60,.55)}
+.nav-pill.btn-pill:hover{background:linear-gradient(180deg,rgba(251,146,60,.34),rgba(255,255,255,.08));border-color:rgba(251,146,60,.8)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--amber-400);box-shadow:0 0 8px var(--amber-400);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(251,191,36,.55)}70%,100%{box-shadow:0 0 0 8px rgba(251,191,36,0)}}
+@media(max-width:520px){.nav-pill.status-pill{display:none}}
+
+/* hero */
+.hero{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(68px + var(--space-6)) 0 var(--space-6);background:radial-gradient(ellipse 55% 45% at 50% 52%,rgba(249,115,22,.2),transparent 70%),radial-gradient(ellipse 60% 35% at 50% 0%,rgba(251,191,36,.07),transparent 70%)}
+.eyebrow{display:inline-block;padding:6px 14px;border:1px solid var(--line);border-radius:var(--radius-pill);background:var(--surface);font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-300);margin-bottom:var(--space-4)}
+h1{margin-top:var(--space-2);max-width:20ch;font-size:var(--text-h1);font-weight:800;line-height:1.08;letter-spacing:-.035em;color:var(--ink)}
+.sub{max-width:52ch;margin-top:var(--space-4);font-size:var(--text-lg);color:var(--ink-muted)}
+
+/* Identical sizing & styling for hero CTA buttons */
+.cta{display:flex;flex-wrap:wrap;gap:var(--space-3);justify-content:center;margin-top:var(--space-8)}
+.cta .btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  height:48px;padding:0 26px;border-radius:var(--radius-pill);
+  font-size:var(--text-sm);font-weight:600;
+  transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;
+}
+.cta .btn:hover{transform:translateY(-2px)}
+.cta .btn.pri{
+  border-color:transparent;color:#1a1004;
+  background:var(--gradient-brand);
+  box-shadow:0 10px 28px -10px rgba(249,115,22,.65);
+}
+.cta .btn.pri:hover{box-shadow:0 14px 32px -10px rgba(249,115,22,.8)}
+.cta .btn.ghost{
+  background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.03));
+  border:1px solid rgba(255,255,255,.12);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(251,146,60,.18),0 12px 32px -14px rgba(0,0,0,.7);
+  color:var(--ink);
+}
+.cta .btn.ghost:hover{
+  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.06));
+  border-color:rgba(251,146,60,.45);
+}
+
+/* stage & expansive wave bar */
+.stage{position:relative;width:min(1280px,calc(100vw - 24px));margin:56px 0 48px}.stage::before{content:"";position:absolute;left:50%;top:50%;width:min(1150px,100%);height:260px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(249,115,22,.35),rgba(251,191,36,.1) 60%,transparent);filter:blur(40px);pointer-events:none}
+.track-wrapper{position:relative;width:100%;height:72px;display:flex;align-items:center}
+.track{position:relative;width:100%;height:72px}
+.bar{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;opacity:0}
+.underglow{display:block;position:absolute;top:calc(50% - 4.5px);left:0;height:9px;width:100%;border-radius:9999px;background:linear-gradient(90deg,rgba(249,115,22,.45),rgba(251,191,36,.65) 50%,rgba(255,255,255,.8));filter:blur(6px);opacity:.85;pointer-events:none;z-index:1}
+.capsule{position:absolute;top:50%;left:50%;width:280px;height:72px;transform:translate(-50%,-50%) perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(calc(var(--glass-scale,1.7)*var(--lift,1)));transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .3s ease;will-change:transform;border-radius:9999px;overflow:hidden;clip-path:inset(0 round 9999px);z-index:20;pointer-events:none;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0) 45%,rgba(255,255,255,.05));box-shadow:0 10px 22px -10px rgba(15,23,42,.22),0 2px 6px -2px rgba(15,23,42,.1),inset 0 1px 0 rgba(255,255,255,.55)}
+.capsule.hot{box-shadow:0 10px 22px -10px rgba(15,23,42,.22),inset 0 1px 0 rgba(255,255,255,.8),inset 0 0 0 1px rgba(255,200,130,.4),inset 0 -14px 24px -14px rgba(249,115,22,.45)}
+.capsule canvas{position:absolute;inset:0;width:100%;height:100%;border-radius:9999px;pointer-events:none;display:block}
+#cvRefract{z-index:2}#cvSand{display:none}#cvShell{z-index:8}
+.pct{position:relative;z-index:10;font-size:22px;font-weight:700;text-align:center;white-space:nowrap;color:#fff;line-height:1.1;text-shadow:0 1px 2px rgba(15,23,42,.55),0 0 8px rgba(249,115,22,.5),-.5px 0 1.2px rgba(251,191,36,.45),.5px 0 1.2px rgba(251,146,60,.45);transition:opacity .42s cubic-bezier(.22,1,.36,1),transform .42s cubic-bezier(.22,1,.36,1),filter .42s ease}
+.pct.hidden{opacity:0;transform:scale(.82);filter:blur(3px)}
+.rl,.rr{position:absolute;top:50%;font-size:17px;line-height:1.1;text-align:center;font-weight:700;color:rgba(255,244,214,.42);filter:blur(.65px);pointer-events:none;z-index:9;white-space:nowrap;text-shadow:0 0 4px rgba(251,146,60,.4);transition:opacity .42s ease,filter .42s ease}
+.rl.hidden,.rr.hidden{opacity:0;filter:blur(3px)}
+.rl{left:14px;transform:translateY(-50%) scaleX(-.38) scaleY(1.05);transform-origin:left center;-webkit-mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.72) 28%,transparent);mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.72) 28%,transparent)}
+.rr{right:14px;transform:translateY(-50%) scaleX(-.38) scaleY(1.05);transform-origin:right center;-webkit-mask-image:linear-gradient(270deg,transparent,rgba(0,0,0,.72) 28%,transparent);mask-image:linear-gradient(270deg,transparent,rgba(0,0,0,.72) 28%,transparent)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);width:100%;max-width:960px;margin-top:var(--space-12);border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--surface);overflow:hidden}
+.stat{padding:var(--space-6) var(--space-4);border-left:1px solid var(--line)}.stat:first-child{border-left:0}
+.stat b{display:block;font-size:clamp(1.25rem,2.6vw,1.75rem);font-weight:700;letter-spacing:-.02em}
+.stat span{font-size:var(--text-sm);color:var(--ink-muted)}
+
+/* sections */
+.sec{padding:var(--space-20) 0}
+.sec-head{text-align:center;max-width:640px;margin:0 auto}
+.sec-head h2{font-size:var(--text-h2);font-weight:700;letter-spacing:-.025em;line-height:1.15;color:var(--ink)}
+.sec-head p{margin-top:var(--space-4);color:var(--ink-muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-6);margin-top:var(--space-12)}
+.card{padding:var(--space-8);border-radius:var(--radius-lg);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid var(--line);transition:transform .25s,border-color .25s}
+.card:hover{transform:translateY(-4px);border-color:rgba(251,146,60,.4)}
+.card i{display:block;width:36px;height:3px;border-radius:9999px;margin-bottom:var(--space-6);background:var(--gradient-brand);box-shadow:0 0 12px rgba(251,146,60,.7)}
+.card h3{font-size:1.25rem;font-weight:600;color:var(--ink);margin-bottom:var(--space-2)}
+.card p{font-size:.9375rem;color:var(--ink-muted)}
+.band{margin:0 clamp(16px,5vw,40px) var(--space-20);padding:var(--space-20) var(--space-6);text-align:center;border-radius:28px;border:1px solid var(--line);background:radial-gradient(ellipse at top,rgba(249,115,22,.2),rgba(255,255,255,.03))}
+.band h2{font-size:var(--text-h2);font-weight:700;letter-spacing:-.025em;color:var(--ink)}.band p{max-width:52ch;margin:var(--space-4) auto 0;color:var(--ink-muted)}
+footer{border-top:1px solid var(--line);padding:var(--space-8) 0 calc(var(--space-8) + env(safe-area-inset-bottom,0px));font-size:var(--text-sm);color:var(--ink-muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:space-between;align-items:center}
+footer nav{display:flex;gap:var(--space-6)}footer a:hover{color:var(--ink)}
+
+@media(max-width:860px){:root{--glass-scale:1.4}.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(3){border-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}}
+@media(max-width:640px){:root{--glass-scale:1.1}.stage{margin:40px 0 36px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="#top" aria-label="AetherFiber home">
+    <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="lg" x1="0" x2="1"><stop offset="0" stop-color="#f97316"/><stop offset="1" stop-color="#fbbf24"/></linearGradient></defs><path d="M3 15c3-8 6-8 9 0s6 8 9 0" fill="none" stroke="url(#lg)" stroke-width="2.4" stroke-linecap="round"/></svg>
+    Aether<span>Fiber</span>
+  </a>
+  <nav aria-label="Main">
+    <div class="nav-pill status-pill"><i class="status-dot"></i>99.99% uptime</div>
+    <a class="nav-pill btn-pill" href="#contact">Contact Us</a>
+  </nav>
+</div></header>
+
+<main id="main">
+<section class="hero" id="top"><div class="wrap" style="display:flex;flex-direction:column;align-items:center">
+  <p class="eyebrow">Next-Generation Fiber Optic Internet</p>
+  <h1>Light that carries your connection <span class="grad">further</span></h1>
+  <div class="stage" role="img" aria-label="Animated light wave passing through a glass capsule">
+    <div class="track-wrapper" id="wrap">
+      <div class="underglow" id="glow"></div>
+      <div class="track"><canvas class="bar" id="cvBar" aria-hidden="true"></canvas></div>
+      <div class="capsule" id="capsule" aria-hidden="true">
+        <canvas id="cvRefract"></canvas><canvas id="cvSand"></canvas><canvas id="cvShell"></canvas>
+        <span class="rl" id="refL">Pure Fiber</span><span class="pct" id="pct">Pure Fiber</span><span class="rr" id="refR">Pure Fiber</span>
+      </div>
+    </div>
+  </div>
+  <p class="sub">Pure fiber optic network all the way to your home and business: stable, symmetrical, and ready to grow with your digital needs.</p>
+  
+  <div class="cta">
+    <a class="btn pri" href="#contact">Check Availability</a>
+    <a class="btn ghost" href="#features">Explore Tech</a>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>10 Gbps</b><span>Symmetrical speed</span></div>
+    <div class="stat"><b>99.99%</b><span>Network uptime</span></div>
+    <div class="stat"><b>&lt; 2 ms</b><span>Local latency</span></div>
+    <div class="stat"><b>12,000 km</b><span>Fiber deployed</span></div>
+  </div>
+</div></section>
+
+<section class="sec" id="features"><div class="wrap">
+  <div class="sec-head">
+    <h2>Engineered for absolute fidelity</h2>
+    <p>Discover the advanced optics and multi-strand ribbon architecture that power our backbone.</p>
+  </div>
+  <div class="grid">
+    <div class="card"><i></i><h3>Zero Latency Mesh</h3><p>Direct peering exchanges and quantum-routed nodes ensure lightning-fast response times globally.</p></div>
+    <div class="card"><i></i><h3>Symmetrical Bandwidth</h3><p>Equal upload and download speeds designed for heavy data workflows, 4K streaming, and cloud backups.</p></div>
+    <div class="card"><i></i><h3>Military-Grade Security</h3><p>End-to-end optical encryption protecting your enterprise and residential data packets from interference.</p></div>
+  </div>
+</div></section>
+
+<div class="band"><div class="wrap">
+  <h2>Ready to upgrade your digital lifeline?</h2>
+  <p>Join thousands of forward-thinking households and enterprises experiencing pure fiber optic velocity.</p>
+  <div class="cta"><a class="btn pri" href="#contact">Get Connected Today</a></div>
+</div></div>
+</main>
+
+<footer id="contact"><div class="wrap">
+  <p>&copy; 2026 AetherFiber Atelier. All rights reserved.</p>
+  <nav><a href="#top">Privacy</a><a href="#top">Terms</a><a href="#top">Support</a></nav>
+</div></footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const wrap = $('wrap'), cvBar = $('cvBar'), cvRefract = $('cvRefract'), cvShell = $('cvShell');
+const capsule = $('capsule');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+
+let trackW = 420, trackH = 12, dpr = Math.min(3, Math.max(1, devicePixelRatio || 1));
+
+function syncBar() {
+  const r = wrap.getBoundingClientRect();
+  trackW = Math.max(1, Math.round(r.width || 420));
+  trackH = Math.max(1, Math.round(r.height || 12));
+  dpr = Math.min(3, Math.max(1, devicePixelRatio || 1));
+  const w = Math.round(trackW * dpr), h = Math.round(trackH * dpr);
+  if (cvBar.width !== w || cvBar.height !== h) { cvBar.width = w; cvBar.height = h; }
+}
+
+/* ---------- Chromatic refraction with hidden refracted cursor inside ---------- */
+const RK = 2;
+const OW = 280*RK, OH = 72*RK, PAD = 24, SW = (280 + PAD*2)*RK, SH = 72*RK;
+const offSc = document.createElement('canvas'); offSc.width = SW; offSc.height = SH;
+const sctx = offSc.getContext('2d', { willReadFrequently: true });
+const mx = new Float32Array(OW*OH), my = new Float32Array(OW*OH), ma = new Uint8ClampedArray(OW*OH);
+const Rv = OH/2, halfV = OW/2 - Rv, maxM = 19*RK;
+for (let y = 0; y < OH; y++) for (let x = 0; x < OW; x++) {
+  const cx = x + .5 - OW/2, cy = y + .5 - OH/2;
+  const dx = Math.max(0, Math.abs(cx) - halfV), dist = Math.hypot(dx, cy), d = Rv - dist, i = y*OW + x;
+  if (d <= 0) continue;
+  ma[i] = Math.min(1, d/1.5) * 255;
+  const s = 1 - Math.min(1, d/Rv);
+  const ex = dist > 0 ? (cx < 0 ? -dx : dx)/dist : 0, ey = dist > 0 ? cy/dist : 0;
+  const m = maxM * Math.pow(s, 2.4);
+  mx[i] = -ex*m; my[i] = -ey*m;
+}
+cvRefract.width = OW; cvRefract.height = OH;
+const refractCtx = cvRefract.getContext('2d');
+const refractOut = refractCtx.createImageData(OW, OH);
+
+const ptr = { x: 0, y: 0, tx: 0, ty: 0, a: 0, ta: 0, s: 1.7 };
+
+function renderRefract(capX) {
+  sctx.setTransform(1,0,0,1,0,0);
+  const bgG = sctx.createLinearGradient(0,0,0,SH); bgG.addColorStop(0,'#241c16'); bgG.addColorStop(.5,'#0f0f11'); bgG.addColorStop(1,'#1f1610'); sctx.fillStyle = bgG; sctx.fillRect(0, 0, SW, SH);
+  sctx.setTransform(RK, 0, 0, RK, (PAD + 140 - capX)*RK, 0);
+  sctx.save();
+  sctx.beginPath(); sctx.rect(0, 0, trackW, trackH); sctx.clip();
+  sctx.globalAlpha = 1;
+  sctx.drawImage(cvBar, 0, 0, trackW, trackH);
+  sctx.restore();
+
+  /* Render custom pointer behind/inside the glass lens so refraction bends it */
+  {
+    const k = reduce.matches ? 1 : .35;
+    if (ptr.a < .02) { ptr.x = ptr.tx; ptr.y = ptr.ty; }
+    ptr.x += (ptr.tx - ptr.x)*k; ptr.y += (ptr.ty - ptr.y)*k; ptr.a += (ptr.ta - ptr.a)*(reduce.matches ? 1 : .2);
+    if (ptr.a > .01) {
+      sctx.save(); sctx.globalAlpha = ptr.a; sctx.translate(capX - 140 + ptr.x, ptr.y); sctx.scale(1/ptr.s, 1/ptr.s);
+      const gl = sctx.createRadialGradient(5, 8, 0, 5, 8, 38); gl.addColorStop(0, 'rgba(251,146,60,.55)'); gl.addColorStop(1, 'rgba(251,146,60,0)');
+      sctx.fillStyle = gl; sctx.fillRect(-40, -40, 90, 90);
+      sctx.beginPath(); sctx.moveTo(0,0); sctx.lineTo(0,17); sctx.lineTo(4.2,13); sctx.lineTo(7,19.5); sctx.lineTo(9.6,18.4); sctx.lineTo(6.8,12); sctx.lineTo(12,12); sctx.closePath();
+      sctx.fillStyle = '#fff'; sctx.fill(); sctx.strokeStyle = 'rgba(20,12,4,.85)'; sctx.lineWidth = 1.3; sctx.lineJoin = 'round'; sctx.stroke();
+      sctx.restore();
+    }
+  }
+
+  const sd = sctx.getImageData(0, 0, SW, SH).data, od = refractOut.data;
+  const ks = [1.1, 1, .9], v = [0,0,0];
+  for (let y = 0; y < OH; y++) for (let x = 0; x < OW; x++) {
+    const i = y*OW + x, o = i*4, a = ma[i];
+    if (!a) { od[o+3] = 0; continue; }
+    const bx = SW/2 + (x + .5 - OW/2)*.92, by = SH/2 + (y + .5 - OH/2)*.92;
+    for (let ch = 0; ch < 3; ch++) {
+      let sx = bx + mx[i]*ks[ch] - .5, sy = by + my[i]*ks[ch] - .5;
+      sx = sx < 0 ? 0 : sx > SW - 1.001 ? SW - 1.001 : sx;
+      sy = sy < 0 ? 0 : sy > SH - 1.001 ? SH - 1.001 : sy;
+      const x0 = Math.floor(sx), y0 = Math.floor(sy), fx = sx - x0, fy = sy - y0;
+      const p = (y0*SW + x0)*4 + ch, q = p + SW*4;
+      v[ch] = (sd[p]*(1-fx) + sd[p+4]*fx)*(1-fy) + (sd[q]*(1-fx) + sd[q+4]*fx)*fy;
+    }
+    od[o] = (v[0]-128)*1.04 + 128; od[o+1] = (v[1]-128)*1.04 + 128; od[o+2] = (v[2]-128)*1.04 + 128;
+    od[o+3] = a;
+  }
+  refractCtx.putImageData(refractOut, 0, 0);
+}
+
+/* ---------- Specular / Fresnel shell ---------- */
+(function paintGlass() {
+  const K = Math.min(8, Math.max(6, Math.ceil((devicePixelRatio || 1) * 3)));
+  const W = 280*K, H = 72*K;
+  cvShell.width = W; cvShell.height = H;
+  const c = cvShell.getContext('2d'), img = c.createImageData(W, H), D = img.data;
+  const nrm = (a,b,cc) => { const l = Math.hypot(a,b,cc); return [a/l,b/l,cc/l]; };
+  const dot = (a,b) => a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
+  const L1 = nrm(-.45,-.8,.55), L2 = nrm(.5,.85,.45);
+  const H1 = nrm(L1[0], L1[1], L1[2]+1), H2 = nrm(L2[0], L2[1], L2[2]+1);
+  const R = H/2, half = W/2 - R, hairW = .8*K;
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const cx = x + .5 - W/2, cy = y + .5 - H/2;
+    const dx = Math.max(0, Math.abs(cx) - half), dist = Math.hypot(dx, cy), d = R - dist;
+    if (d <= 0) continue;
+    const i = (y*W + x)*4, s = 1 - Math.min(1, d/R);
+    const ex = dist > 0 ? (cx < 0 ? -dx : dx)/dist : 0, ey = dist > 0 ? cy/dist : 0;
+    const n = nrm(ex*s, ey*s, Math.sqrt(Math.max(.0001, 1 - s*s)));
+    const s1 = Math.pow(Math.max(0, dot(n,H1)), 110)*.95 + Math.pow(Math.max(0, dot(n,H1)), 16)*.16;
+    const s2 = Math.pow(Math.max(0, dot(n,H2)), 60)*.4;
+    const fres = Math.pow(1 - n[2], 2.4);
+    const hr = d < hairW ? (1 - d/hairW)*.6*(.45 + .55*Math.max(0, -ey)) : 0;
+    let nz = (Math.sin(x*12.9898 + y*78.233)*43758.5453) % 1; if (nz < 0) nz += 1;
+    const a1 = Math.min(1, fres*.3), a2 = Math.min(1, s1), a3 = Math.min(1, hr), a4 = Math.min(1, s2);
+    const a5 = .05*nz*(.4 + fres), a6 = .06*s*Math.max(0, ey);
+    const A = 1 - (1-a1)*(1-a2)*(1-a3)*(1-a4)*(1-a5)*(1-a6);
+    if (A <= .002) continue;
+    const w = a2 + a3 + a5, sum = a1 + w + a4 + a6;
+    D[i]   = (165*a1 + 255*w + 205*a4 + 14*a6)/sum;
+    D[i+1] = (243*a1 + 255*w + 250*a4 + 116*a6)/sum;
+    D[i+2] = (252*a1 + 255*w + 255*a4 + 144*a6)/sum;
+    D[i+3] = A*255*Math.min(1, d/1.2);
+  }
+  c.putImageData(img, 0, 0);
+})();
+
+/* ---------- Water-surface multi-strand wavy ribbons ---------- */
+function renderWave(time) {
+  const c = cvBar.getContext('2d');
+  c.setTransform(1,0,0,1,0,0); c.clearRect(0,0,cvBar.width,cvBar.height);
+  cvBar.style.opacity = '1';
+  c.scale(dpr, dpr);
+  const mid = trackH/2, step = 3, N = 5, paths = [];
+  const g = c.createLinearGradient(0, 0, trackW, 0);
+  g.addColorStop(0, '#f97316'); g.addColorStop(.5, '#fbbf24'); g.addColorStop(1, '#ffffff');
+  for (let k = 0; k < N; k++) {
+    const p = [];
+    for (let x = 0; x <= trackW + step; x += step) {
+      const env = .55 + .45*Math.sin(Math.min(1, x/trackW)*Math.PI);
+      const y = Math.sin(x*(.032 + k*.007) - time*(1.5 + k*.45) + k*1.3)*(7 - k*.8) + Math.sin(x*(.081 + k*.011) + time*(1.1 + k*.3) + k)*(3 - k*.3);
+      p.push([x, mid + env*y]);
+    }
+    paths.push(p);
+  }
+  const trace = p => { c.beginPath(); p.forEach((q, i) => i ? c.lineTo(q[0], q[1]) : c.moveTo(q[0], q[1])); };
+  c.globalCompositeOperation = 'lighter';
+  c.lineJoin = 'round'; c.lineCap = 'round';
+  for (let k = 0; k < N - 1; k++) {
+    const a = paths[k], b = paths[k + 1];
+    trace(a);
+    for (let i = b.length - 1; i >= 0; i--) c.lineTo(b[i][0], b[i][1]);
+    c.closePath(); c.globalAlpha = .13; c.fillStyle = g; c.fill();
+  }
+  paths.forEach((p, k) => {
+    const core = k === 2;
+    trace(p);
+    c.globalAlpha = core ? .95 : .3 + .1*k;
+    c.strokeStyle = g; c.lineWidth = core ? 2.4 : 1.1;
+    c.shadowColor = 'rgba(255,170,60,.95)'; c.shadowBlur = (core ? 12 : 6)*dpr; c.stroke();
+  });
+  c.shadowBlur = 0;
+  c.globalAlpha = .85; trace(paths[2]); c.strokeStyle = '#fffaf0'; c.lineWidth = .9; c.stroke();
+  c.globalAlpha = 1;
+  c.globalCompositeOperation = 'destination-in';
+  const fade = c.createLinearGradient(0, 0, trackW, 0);
+  fade.addColorStop(0, 'rgba(0,0,0,0)'); fade.addColorStop(.08, 'rgba(0,0,0,1)'); fade.addColorStop(.92, 'rgba(0,0,0,1)'); fade.addColorStop(1, 'rgba(0,0,0,0)');
+  c.fillStyle = fade; c.fillRect(0, 0, trackW + step, trackH);
+  c.globalCompositeOperation = 'source-over';
+}
+
+/* ---------- Main loop ---------- */
+let lastT = null;
+
+function frame(now) {
+  if (lastT === null) lastT = now;
+  lastT = now;
+  syncBar();
+
+  const capX = Math.round(trackW/2*dpr)/dpr;
+  capsule.style.left = capX.toFixed(3) + 'px';
+
+  renderWave(now/1000);
+  renderRefract(capX);
+
+  requestAnimationFrame(frame);
+}
+
+/* ---------- Cursor hover handling ---------- */
+const leaveGlass = () => {
+  capsule.classList.remove('hot');
+  ptr.ta = 0;
+  document.documentElement.style.cursor = '';
+};
+
+addEventListener('pointermove', e => {
+  const r = capsule.getBoundingClientRect(), m = 28;
+  if (e.clientX < r.left - m || e.clientX > r.right + m || e.clientY < r.top - m || e.clientY > r.bottom + m) {
+    if (capsule.classList.contains('hot')) leaveGlass();
+    return;
+  }
+  const lx = (e.clientX - r.left)/r.width*280, ly = (e.clientY - r.top)/r.height*72;
+  const inside = Math.hypot(Math.max(0, Math.abs(lx - 140) - 104), ly - 36) < 34;
+  ptr.tx = lx; ptr.ty = ly; ptr.s = r.width/280; ptr.ta = inside ? 1 : 0;
+  document.documentElement.style.cursor = inside ? 'none' : '';
+  capsule.classList.toggle('hot', inside);
+});
+
+document.documentElement.addEventListener('pointerleave', leaveGlass);
+addEventListener('blur', leaveGlass);
+
+addEventListener('resize', syncBar);
+syncBar();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
